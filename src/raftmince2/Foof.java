@@ -13,16 +13,17 @@ import java.awt.Graphics;
  * @author 639113
  */
 public class Foof extends Entity {
+    private static final String TYPE = "Food";
     private static final int WIDTH = 5;
     private static final int HEIGHT = 5;
     private static final int WEIGHT = ((int) (Math.random()*5));
     private static final Color COLOR = Color.BLUE;
     
     public Foof(int x, int y){
-        super(0,x,y,WIDTH,HEIGHT,COLOR,0);
+        super(0,x,y,WIDTH,HEIGHT,COLOR,0,TYPE);
     }
     public Foof(int x, int y, Color color) {
-        super(0,x,y,WIDTH,HEIGHT,color,0);
+        super(0,x,y,WIDTH,HEIGHT,color,0,TYPE);
     }
     @Override
     public void draw(Graphics g) {
@@ -31,7 +32,13 @@ public class Foof extends Entity {
     }
     
     public boolean collide(Entity other) {
-        boolean collided = (this.getBounds().intersects(other.getBounds()));
+        boolean collided = false;
+        if (!(other.getType().equals("Food"))) {
+        collided = (this.getBounds().intersects(other.getBounds()));
+        }
+        else {
+            collided = false;
+        }
         if (collided) {
             this.foofCollide(other);
             other.didCollide();

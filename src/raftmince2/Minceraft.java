@@ -13,6 +13,7 @@ import java.awt.Graphics;
  * @author 639113
  */
 public class Minceraft extends Entity {
+    private static final String TYPE = "Minceraft";
     private static final int WIDTH = 15;
     private static final int HEIGHT = 10;
     private static final Color COLOR = Color.RED;
@@ -20,7 +21,7 @@ public class Minceraft extends Entity {
     private static final int STR = ((int) (Math.random()*10));
     
     public Minceraft(int x, int y){
-        super(SPEED,x,y,WIDTH,HEIGHT,COLOR,STR);
+        super(SPEED,x,y,WIDTH,HEIGHT,COLOR,STR,TYPE);
     }
     @Override
     public void draw(Graphics g) {

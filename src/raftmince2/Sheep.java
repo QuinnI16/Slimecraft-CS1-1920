@@ -13,6 +13,7 @@ import java.awt.Graphics;
  * @author 639113
  */
 public class Sheep extends Entity {
+    private static final String TYPE = "Sheep";
     private static final int WIDTH = 10;
     private static final int HEIGHT = 5;
     private static final int SPEED = 10;
@@ -20,7 +21,7 @@ public class Sheep extends Entity {
     private static final Color COLOR = Color.white;
     
     public Sheep(int x, int y){
-        super(SPEED,x,y,WIDTH,HEIGHT,COLOR,STR);
+        super(SPEED,x,y,WIDTH,HEIGHT,COLOR,STR,TYPE);
     }
     @Override
     public void draw(Graphics g) {

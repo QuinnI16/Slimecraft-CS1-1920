@@ -7,7 +7,10 @@ package raftmince2;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JPanel;
@@ -16,7 +19,7 @@ import javax.swing.JPanel;
  *
  * @author 639113
  */
-public class World extends JPanel {
+public class World extends JPanel implements MouseListener{
     private ArrayList<Minceraft> boats = new ArrayList<>();
     private ArrayList<Sheep> baits = new ArrayList<>();
     private ArrayList<Entity> ents = new ArrayList<>();
@@ -26,6 +29,7 @@ public class World extends JPanel {
     private ArrayList<Minceraft> newedboats = new ArrayList<>();
     Timer timer;
     public World() {
+        this.addMouseListener(this);
         timer = new Timer();
         timer.scheduleAtFixedRate(new ScheduleTask(), 100, 1000/30);
         for (int i = 0; i<50;i++) {
@@ -67,37 +71,39 @@ public class World extends JPanel {
             foofs.add(fake);
         }
     }
+    @Override
+    public void mouseExited(MouseEvent e) {
+        
+    }
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        
+    }
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        
+    }
+    @Override 
+    public void mousePressed(MouseEvent e) {
+        
+    }
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.printf("\nMouse click at (%d, %d)",e.getX(),e.getY());
+    }
     
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.setBackground(Color.BLACK);
         for (Entity ent : ents) {
-            if (ent.isActive()) {
             ent.draw(g);
             ent.update();
+            ent.collideWorldBounds(800,600);
            for (Entity ent2 : ents) {
-                if (ent != ent2&&ent2.isActive()) {
                     ent.collide(ent2);
-                }
             }
-           }
-            for (Minceraft boat : boats) {
-                if (boat.isActive()) {
-                for (Sheep shep : baits) {
-                    if (shep.isActive()) {
-                        if (boat.collide(shep)) {
-                            if (!(boat.fight(shep))) {
-                                boat.grow(shep.getStrength());
-                            }
-                            else {
-                                shep.grow(boat.getStrength());
-                            }
-                        }
-                    }
-                }
-              }
-            }
-            /**for (Sheep shep : baits) {
+        }
+        /**for (Sheep shep : baits) {
                 if (shep.isActive()) {
             for (Sheep shep2 : baits) {
                 if (shep != shep2&&shep2.isActive()) {
@@ -121,8 +127,24 @@ public class World extends JPanel {
             }
                 }
         }**/
+        for (Minceraft boat : boats) {
+                if (boat.isActive()) {
+                for (Sheep shep : baits) {
+                    if (shep.isActive()) {
+                        if (boat.collide(shep)) {
+                            if (!(boat.fight(shep))) {
+                                boat.grow(shep.getStrength());
+                                
+                            }
+                            else {
+                                shep.grow(boat.getStrength());
+                            }
+                        }
+                    }
+                }
+              }
+            }
         clearDead();
-        }
         //addNew("Sheep");
         //addNew("Minceraft");
     }
@@ -160,6 +182,14 @@ public class World extends JPanel {
                     baits.add((Sheep) newed);
                 }
                 newedboats.clear();
+        }
+    }
+    public void createEnt(int x,int y, Entity type) {
+        if (type.getType().equals("Food")) {
+            
+        }
+        else if (type.getType().equals("Sheep")) {
+            
         }
     }
     private class ScheduleTask extends TimerTask {

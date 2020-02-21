@@ -14,6 +14,7 @@ import java.awt.Rectangle;
  * @author 639113
  */
 public abstract class Entity {
+    private String type;
     private int speed;
     private int x,y,vx,vy,strength;
     private int width,height;
@@ -22,17 +23,24 @@ public abstract class Entity {
     private Rectangle bounds;
     private boolean reproduced = false;
     
-    public Entity(int speed, int x, int y, int width, int height, Color color, int strength){
+    public Entity(int speed, int x, int y, int width, int height, Color color, int strength, String type){
         this.speed = speed;
         this.x=x;
         this.y=y;
         this.vx=(int)(Math.random()*this.speed);
+        while ((this.vx<1)) {
+            this.vx=(int)(Math.random()*this.speed);
+        }
         this.vy=(int)(Math.random()*this.speed);
+        while ((this.vy<1)) {
+            this.vy=(int)(Math.random()*this.speed);
+        }
         this.width=width;
         this.height=height;
         this.color=color;
         this.bounds=new Rectangle(x,y,width,height);
         this.strength = strength;
+        this.type=type;
     }
     public void update(){
         this.x += this.vx;
@@ -49,6 +57,13 @@ public abstract class Entity {
             other.didCollide();
         }
         return collided;
+    }
+    
+    public void collideWorldBounds(int cWidth, int cHeight) {
+        if (this.x < 0 || this.x + this.width > cWidth)
+            this.vx = -this.vx;
+        if (this.y < 0 || this.y + this.height > cHeight)
+            this.vy = -this.vy;       
     }
     
     public void didCollide() {
@@ -119,6 +134,9 @@ public abstract class Entity {
         return strength;
     }
     
+    public String getType() {
+        return type;
+    }
     public void setRep(boolean bool) {
         this.reproduced = bool;
     }

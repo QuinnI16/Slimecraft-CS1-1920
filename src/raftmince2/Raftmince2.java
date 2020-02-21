@@ -7,13 +7,15 @@ package raftmince2;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 
 /**
  *
  * @author 639113
  */
-public class Raftmince2 extends JFrame{
+public class Raftmince2 extends JFrame {
 
     /**
      * @param args the command line arguments
@@ -26,7 +28,7 @@ public class Raftmince2 extends JFrame{
         j.setSize(800, 600);
         j.setVisible(true);
         j.setLocationRelativeTo(null);
-        j.addKeyListener(new KeyAdapter() {
+        /**j.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 c.keyPressed(e);
@@ -35,7 +37,7 @@ public class Raftmince2 extends JFrame{
             public void keyReleased(KeyEvent e) {
                 c.keyReleased(e);
             }
-        });
+        });**/
     }
     
 }
